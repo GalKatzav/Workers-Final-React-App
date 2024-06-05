@@ -1,0 +1,70 @@
+.page404-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    background: #f0f0f0;
+    color: #333;
+    padding: 20px;
+}
+
+.page404-container h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.page404-container p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+}
+
+.graphic-container {
+    margin-bottom: 40px;
+}
+
+.graphic-404 {
+    font-size: 8rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.graphic-404 span {
+    margin: 0 10px;
+    animation: bounce 1s infinite;
+}
+
+.graphic-404 span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.graphic-404 span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.home-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.home-button:hover {
+    background-color: #0056b3;
+}
