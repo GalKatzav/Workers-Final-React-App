@@ -1,0 +1,24 @@
+.favorites-page {
+    padding: 20px;
+    text-align: center;
+}
+
+.favorites-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.favorites-star-icon {
+    color: yellow;
+    margin-left: 10px;
+}
+
+.employee-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}

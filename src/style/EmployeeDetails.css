@@ -1,0 +1,62 @@
+.employee-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.employee-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.employee-details h3 {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.employee-details p {
+    margin: 5px 0;
+}
+
+.map-container {
+    width: 100%;
+    max-width: 600px;
+    height: 300px;
+    margin-top: 20px;
+}
+
+.leaflet-container {
+    width: 100%;
+    height: 100%;
+}
+
+.star-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: gray;
+    transition: color 0.3s ease;
+    margin-left: 10px;
+}
+
+.star-icon.favorite {
+    color: yellow;
+}
+
+.back-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+
+.back-button:hover {
+    background-color: #555;
+}
