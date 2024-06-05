@@ -28,6 +28,22 @@ const EmployeeDetailsPage = () => {
     }
   }, [uuid, employees, favorites, allEmployees]);
 
+  useEffect(() => {
+    if (employee) {
+      const allAvailableEmployees = [
+        ...employees,
+        ...favorites,
+        ...allEmployees,
+      ];
+      const updatedEmployee = allAvailableEmployees.find(
+        (emp) => emp.login.uuid === uuid
+      );
+      if (updatedEmployee) {
+        setEmployee(updatedEmployee);
+      }
+    }
+  }, [favorites, employees, allEmployees, uuid, employee]);
+
   const handleFavoriteClick = () => {
     if (!employee) return;
 

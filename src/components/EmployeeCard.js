@@ -11,7 +11,8 @@ const EmployeeCard = ({ employee, delay, showDetails, index }) => {
 
   const isFavorite = favorites.some((fav) => fav.email === email);
 
-  const handleFavoriteClick = () => {
+  const handleFavoriteClick = (e) => {
+    e.stopPropagation(); // מונע את הפעלת ה-link כאשר לוחצים על הכוכב
     if (isFavorite) {
       removeFavorite(email);
     } else {
