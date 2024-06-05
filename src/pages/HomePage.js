@@ -11,7 +11,8 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchEmployees();
-  }, [fetchEmployees]);
+    // eslint-disable-next-line
+  }, []);
 
   const handleSearch = () => {
     navigate(`/search/${searchTerm}`);

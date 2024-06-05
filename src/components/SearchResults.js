@@ -9,7 +9,7 @@ const SearchResults = () => {
 
   useEffect(() => {
     fetchEmployees(searchTerm);
-  }, [searchTerm, fetchEmployees]);
+  }, [searchTerm]);
 
   return (
     <div className="employee-list">
