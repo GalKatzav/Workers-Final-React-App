@@ -5,7 +5,7 @@ import { FaStar } from "react-icons/fa";
 import "../style/FavoritesPage.css";
 
 const FavoritesPage = () => {
-  const { favorites, removeFavorite } = useContext(EmployeeContext);
+  const { favorites } = useContext(EmployeeContext);
   const [favoriteEmployees, setFavoriteEmployees] = useState([]);
 
   useEffect(() => {

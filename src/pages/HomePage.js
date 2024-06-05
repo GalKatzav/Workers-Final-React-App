@@ -11,7 +11,7 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchEmployees();
-  }, []);
+  }, [fetchEmployees]);
 
   const handleSearch = () => {
     navigate(`/search/${searchTerm}`);
