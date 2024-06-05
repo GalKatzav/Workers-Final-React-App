@@ -1,5 +1,11 @@
 .employee-card {
-    transition: transform 0.3s ease;
+    transition: transform 0.6s ease; /* שינוי הזמן ל-0.6 שניות */
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px;
+    animation: fadeIn 1s ease-out; /* שינוי הזמן ל-1 שניות */
 }
 
 .employee-card:hover {
@@ -30,4 +36,13 @@
 
 .star-icon.favorite {
     color: yellow;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

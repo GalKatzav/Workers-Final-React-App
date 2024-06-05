@@ -11,8 +11,7 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchEmployees();
-    // eslint-disable-next-line
-  }, []);
+  }, [fetchEmployees]);
 
   const handleSearch = () => {
     navigate(`/search/${searchTerm}`);
@@ -39,7 +38,7 @@ const HomePage = () => {
           <EmployeeCard
             key={emp.email}
             employee={emp}
-            delay={index * 100}
+            delay={index * 200} // זמן הדיליי כך שיהיה איטי יותר
             showDetails={true}
             index={index}
           />
