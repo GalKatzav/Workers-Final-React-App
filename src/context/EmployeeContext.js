@@ -12,10 +12,7 @@ export const EmployeeProvider = ({ children }) => {
 
   const fetchEmployees = useCallback(async (searchTerm = "") => {
     try {
-      let url = "https://randomuser.me/api/?results=100";
-      if (searchTerm) {
-        url += `&seed=${searchTerm}`;
-      }
+      let url = `https://randomuser.me/api/?results=100&seed=${searchTerm}`;
       const response = await fetch(url);
       const data = await response.json();
       setAllEmployees(data.results);

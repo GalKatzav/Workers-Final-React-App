@@ -10,7 +10,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchEmployees();
+    fetchEmployees("default"); // טוען עובדים עם seed ברירת מחדל
   }, [fetchEmployees]);
 
   const handleSearch = () => {

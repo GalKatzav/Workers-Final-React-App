@@ -13,13 +13,10 @@ const SearchResults = () => {
   }, [searchTerm, fetchEmployees]);
 
   useEffect(() => {
-    if (allEmployees.length > 0) {
-      const filtered = allEmployees.filter((emp) =>
-        emp.company?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredEmployees(filtered);
+    if (allEmployees && allEmployees.length > 0) {
+      setFilteredEmployees(allEmployees);
     }
-  }, [allEmployees, searchTerm]);
+  }, [allEmployees]);
 
   return (
     <div className="employee-list">
