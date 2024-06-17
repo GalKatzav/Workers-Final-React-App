@@ -4,18 +4,14 @@ import { EmployeeContext } from "../context/EmployeeContext";
 import { FaStar } from "react-icons/fa";
 import "../style/EmployeeCard.css";
 
-const EmployeeCard = ({ employee, delay, showDetails }) => {
+const EmployeeCard = ({ employee, delay, showDetails, index, company }) => {
   const { favorites, addFavorite, removeFavorite } = useContext(EmployeeContext);
-  const { name, email, location, picture, dob, login } = employee;
-
-  if (!name || !email || !location || !picture || !dob || !login) {
-    return null; // If any required property is missing, do not render the card
-  }
+  const { name, email, location, picture, dob } = employee;
 
   const isFavorite = favorites.some((fav) => fav.email === email);
 
   const handleFavoriteClick = (e) => {
-    e.stopPropagation(); // Prevents the link from being activated when clicking on the star
+    e.stopPropagation();
     if (isFavorite) {
       removeFavorite(email);
     } else {
@@ -41,7 +37,9 @@ const EmployeeCard = ({ employee, delay, showDetails }) => {
       <p>
         {location.city}, {location.country}
       </p>
-      <Link to={`/employee/${login.uuid}`}>More Details</Link>
+      <Link to={`/employee/?company=${company}&index=${index}`}>
+        More Details
+      </Link>
     </div>
   );
 };

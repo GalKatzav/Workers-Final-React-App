@@ -1,43 +1,60 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { EmployeeContext } from "../context/EmployeeContext";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import { FaStar } from "react-icons/fa";
 import "../style/EmployeeDetails.css";
 
 const EmployeeDetailsPage = () => {
-  const { uuid } = useParams();
+  const [searchParams] = useSearchParams();
+  const company = searchParams.get("company");
+  const index = parseInt(searchParams.get("index"), 10);
   const navigate = useNavigate();
-  const { employees, favorites, addFavorite, removeFavorite, allEmployees } =
-    useContext(EmployeeContext);
+  const {
+    allEmployees,
+    favorites,
+    searchedEmployees,
+    addFavorite,
+    removeFavorite,
+  } = useContext(EmployeeContext);
   const [employee, setEmployee] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    const findEmployee = () => {
-      const allAvailableEmployees = [...employees, ...favorites, ...allEmployees];
-      return (
-        allAvailableEmployees.find((emp) => emp.login.uuid === uuid) ||
-        JSON.parse(localStorage.getItem("favorites") || "[]").find(
-          (emp) => emp.login.uuid === uuid
-        )
-      );
-    };
+    let empArray;
+    switch (company) {
+      case "favorites":
+        empArray = favorites;
+        break;
+      case "searched":
+        empArray = searchedEmployees;
+        break;
+      default:
+        empArray = allEmployees;
+    }
 
-    setEmployee(findEmployee());
-  }, [uuid, employees, favorites, allEmployees]);
+    if (empArray && empArray[index]) {
+      const emp = empArray[index];
+      setEmployee(emp);
+      setIsFavorite(favorites.some((fav) => fav.email === emp.email));
+    } else {
+      setEmployee(null);
+    }
+  }, [company, index, allEmployees, favorites, searchedEmployees]);
 
   const handleFavoriteClick = () => {
     if (!employee) return;
 
-    if (favorites.some((fav) => fav.email === employee.email)) {
+    if (isFavorite) {
       removeFavorite(employee.email);
     } else {
       addFavorite(employee);
     }
+    setIsFavorite(!isFavorite);
   };
 
   const handleBackClick = () => {
-    navigate(-1); // Go back to the previous page in history
+    navigate(-1);
   };
 
   if (!employee) {
@@ -45,7 +62,6 @@ const EmployeeDetailsPage = () => {
   }
 
   const { name, location, picture, phone, email: employeeEmail } = employee;
-  const isFavorite = favorites.some((fav) => fav.email === employeeEmail);
 
   return (
     <div className="employee-details">
@@ -91,7 +107,11 @@ const EmployeeDetailsPage = () => {
           </MapContainer>
         </div>
       )}
-      <button onClick={handleBackClick} className="back-button" aria-label="Go back">
+      <button
+        onClick={handleBackClick}
+        className="back-button"
+        aria-label="Go back"
+      >
         Back
       </button>
     </div>

@@ -26,7 +26,8 @@ const FavoritesPage = () => {
   return (
     <div className="favorites-page">
       <h2 className="favorites-title">
-        Favorites <FaStar className="favorites-star-icon" aria-label="Favorites" />
+        Favorites{" "}
+        <FaStar className="favorites-star-icon" aria-label="Favorites" />
       </h2>
       <div className="employee-list">
         {favoriteEmployees.map((emp, index) => (
@@ -35,6 +36,7 @@ const FavoritesPage = () => {
             employee={emp}
             delay={index * 100}
             index={index}
+            company="favorites"
             showDetails={true}
           />
         ))}

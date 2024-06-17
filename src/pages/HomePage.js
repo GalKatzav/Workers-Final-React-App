@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useState, useCallback } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { EmployeeContext } from "../context/EmployeeContext";
 import { useNavigate } from "react-router-dom";
 import EmployeeCard from "../components/EmployeeCard";
 import "../style/HomePage.css";
 
 const HomePage = () => {
-  const { employees, fetchEmployees, error } = useContext(EmployeeContext);
+  const { searchedEmployees, fetchEmployees, error } =
+    useContext(EmployeeContext);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
@@ -15,14 +16,10 @@ const HomePage = () => {
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
+      fetchEmployees(searchTerm);
       navigate(`/search/${searchTerm}`);
     }
   };
-
-  // Debouncing the search input to avoid excessive rerenders or API calls
-  const handleInputChange = useCallback((e) => {
-    setSearchTerm(e.target.value);
-  }, []);
 
   return (
     <div className="home-page">
@@ -36,7 +33,7 @@ const HomePage = () => {
           type="text"
           placeholder="Search by company"
           value={searchTerm}
-          onChange={handleInputChange}
+          onChange={(e) => setSearchTerm(e.target.value)}
           aria-label="Search by company"
         />
         <button onClick={handleSearch} aria-label="Search">
@@ -49,12 +46,13 @@ const HomePage = () => {
         </p>
       )}
       <div className="employee-list">
-        {employees.map((emp, index) => (
+        {searchedEmployees.map((emp, index) => (
           <EmployeeCard
             key={emp.email}
             employee={emp}
             delay={index * 200}
             showDetails={true}
+            company="home"
             index={index}
           />
         ))}

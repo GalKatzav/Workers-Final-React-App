@@ -16,7 +16,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="favorites" element={<FavoritesPage />} />
-            <Route path="employee/:uuid" element={<EmployeeDetailsPage />} />
+            <Route path="employee" element={<EmployeeDetailsPage />} />
             <Route path="search/:searchTerm" element={<SearchResults />} />
             <Route path="*" element={<Page404 />} />
           </Route>
