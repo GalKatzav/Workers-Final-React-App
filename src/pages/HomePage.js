@@ -1,21 +1,28 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { EmployeeContext } from "../context/EmployeeContext";
 import { useNavigate } from "react-router-dom";
 import EmployeeCard from "../components/EmployeeCard";
 import "../style/HomePage.css";
 
 const HomePage = () => {
-  const { employees, fetchEmployees } = useContext(EmployeeContext);
+  const { employees, fetchEmployees, error } = useContext(EmployeeContext);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchEmployees("default"); // טוען עובדים עם seed ברירת מחדל
+    fetchEmployees("default");
   }, [fetchEmployees]);
 
   const handleSearch = () => {
-    navigate(`/search/${searchTerm}`);
+    if (searchTerm.trim()) {
+      navigate(`/search/${searchTerm}`);
+    }
   };
+
+  // Debouncing the search input to avoid excessive rerenders or API calls
+  const handleInputChange = useCallback((e) => {
+    setSearchTerm(e.target.value);
+  }, []);
 
   return (
     <div className="home-page">
@@ -29,16 +36,24 @@ const HomePage = () => {
           type="text"
           placeholder="Search by company"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleInputChange}
+          aria-label="Search by company"
         />
-        <button onClick={handleSearch}>Search</button>
+        <button onClick={handleSearch} aria-label="Search">
+          Search
+        </button>
       </div>
+      {error && (
+        <p className="error-message">
+          Failed to fetch employees. Please try again.
+        </p>
+      )}
       <div className="employee-list">
         {employees.map((emp, index) => (
           <EmployeeCard
             key={emp.email}
             employee={emp}
-            delay={index * 200} // זמן הדיליי כך שיהיה איטי יותר
+            delay={index * 200}
             showDetails={true}
             index={index}
           />

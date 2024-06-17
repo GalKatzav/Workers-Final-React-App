@@ -13,36 +13,18 @@ const EmployeeDetailsPage = () => {
   const [employee, setEmployee] = useState(null);
 
   useEffect(() => {
-    const allAvailableEmployees = [...employees, ...favorites, ...allEmployees];
-    const foundEmployee = allAvailableEmployees.find(
-      (emp) => emp.login.uuid === uuid
-    );
-    if (foundEmployee) {
-      setEmployee(foundEmployee);
-    } else {
-      const savedFavorites = localStorage.getItem("favorites");
-      if (savedFavorites) {
-        const favoriteEmployees = JSON.parse(savedFavorites);
-        setEmployee(favoriteEmployees.find((emp) => emp.login.uuid === uuid));
-      }
-    }
-  }, [uuid, employees, favorites, allEmployees]);
-
-  useEffect(() => {
-    if (employee) {
-      const allAvailableEmployees = [
-        ...employees,
-        ...favorites,
-        ...allEmployees,
-      ];
-      const updatedEmployee = allAvailableEmployees.find(
-        (emp) => emp.login.uuid === uuid
+    const findEmployee = () => {
+      const allAvailableEmployees = [...employees, ...favorites, ...allEmployees];
+      return (
+        allAvailableEmployees.find((emp) => emp.login.uuid === uuid) ||
+        JSON.parse(localStorage.getItem("favorites") || "[]").find(
+          (emp) => emp.login.uuid === uuid
+        )
       );
-      if (updatedEmployee) {
-        setEmployee(updatedEmployee);
-      }
-    }
-  }, [favorites, employees, allEmployees, uuid, employee]);
+    };
+
+    setEmployee(findEmployee());
+  }, [uuid, employees, favorites, allEmployees]);
 
   const handleFavoriteClick = () => {
     if (!employee) return;
@@ -55,7 +37,7 @@ const EmployeeDetailsPage = () => {
   };
 
   const handleBackClick = () => {
-    navigate(-1); // חזרה לעמוד הקודם בהיסטוריה
+    navigate(-1); // Go back to the previous page in history
   };
 
   if (!employee) {
@@ -67,16 +49,20 @@ const EmployeeDetailsPage = () => {
 
   return (
     <div className="employee-details">
-      <img
-        src={picture.large}
-        alt={`${name.first} ${name.last}`}
-        className="employee-image"
-      />
+      {picture?.large && (
+        <img
+          src={picture.large}
+          alt={`${name.first} ${name.last}`}
+          className="employee-image"
+        />
+      )}
       <h3>
         {name.first} {name.last}
         <FaStar
           onClick={handleFavoriteClick}
           className={`star-icon ${isFavorite ? "favorite" : ""}`}
+          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+          role="button"
         />
       </h3>
       <p>Email: {employeeEmail}</p>
@@ -85,25 +71,27 @@ const EmployeeDetailsPage = () => {
         Address:{" "}
         {`${location.street.number} ${location.street.name}, ${location.city}, ${location.state}, ${location.country}, ${location.postcode}`}
       </p>
-      <div className="map-container">
-        <MapContainer
-          center={[
-            location.coordinates.latitude,
-            location.coordinates.longitude,
-          ]}
-          zoom={13}
-          scrollWheelZoom={false}
-        >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          <Marker
-            position={[
+      {location.coordinates && (
+        <div className="map-container">
+          <MapContainer
+            center={[
               location.coordinates.latitude,
               location.coordinates.longitude,
             ]}
-          />
-        </MapContainer>
-      </div>
-      <button onClick={handleBackClick} className="back-button">
+            zoom={13}
+            scrollWheelZoom={false}
+          >
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <Marker
+              position={[
+                location.coordinates.latitude,
+                location.coordinates.longitude,
+              ]}
+            />
+          </MapContainer>
+        </div>
+      )}
+      <button onClick={handleBackClick} className="back-button" aria-label="Go back">
         Back
       </button>
     </div>

@@ -4,15 +4,18 @@ import { EmployeeContext } from "../context/EmployeeContext";
 import { FaStar } from "react-icons/fa";
 import "../style/EmployeeCard.css";
 
-const EmployeeCard = ({ employee, delay, showDetails, index }) => {
-  const { favorites, addFavorite, removeFavorite } =
-    useContext(EmployeeContext);
+const EmployeeCard = ({ employee, delay, showDetails }) => {
+  const { favorites, addFavorite, removeFavorite } = useContext(EmployeeContext);
   const { name, email, location, picture, dob, login } = employee;
+
+  if (!name || !email || !location || !picture || !dob || !login) {
+    return null; // If any required property is missing, do not render the card
+  }
 
   const isFavorite = favorites.some((fav) => fav.email === email);
 
   const handleFavoriteClick = (e) => {
-    e.stopPropagation(); // מונע את הפעלת ה-link כאשר לוחצים על הכוכב
+    e.stopPropagation(); // Prevents the link from being activated when clicking on the star
     if (isFavorite) {
       removeFavorite(email);
     } else {
@@ -22,12 +25,16 @@ const EmployeeCard = ({ employee, delay, showDetails, index }) => {
 
   return (
     <div className="employee-card" style={{ animationDelay: `${delay}ms` }}>
-      <img src={picture.thumbnail} alt={name.first} />
+      {picture.thumbnail && (
+        <img src={picture.thumbnail} alt={`${name.first} ${name.last}`} />
+      )}
       <h3>
         {name.first} {name.last}
         <FaStar
           onClick={handleFavoriteClick}
           className={`star-icon ${isFavorite ? "favorite" : ""}`}
+          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+          role="button"
         />
       </h3>
       {showDetails && <p>Age: {dob.age}</p>}

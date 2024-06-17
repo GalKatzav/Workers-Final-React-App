@@ -9,7 +9,7 @@ const EmployeeDetails = ({ employee }) => {
 
   return (
     <div className="employee-details">
-      <img src={picture.large} alt={name.first} />
+      {picture && <img src={picture.large} alt={name.first} />}
       <h3>
         {name.first} {name.last}
       </h3>
@@ -19,19 +19,21 @@ const EmployeeDetails = ({ employee }) => {
         Location: {location.street.name} {location.street.number},{" "}
         {location.city}, {location.country}
       </p>
-      <MapContainer
-        center={[location.coordinates.latitude, location.coordinates.longitude]}
-        zoom={13}
-        scrollWheelZoom={false}
-      >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <Marker
-          position={[
-            location.coordinates.latitude,
-            location.coordinates.longitude,
-          ]}
-        />
-      </MapContainer>
+      {location.coordinates && (
+        <MapContainer
+          center={[location.coordinates.latitude, location.coordinates.longitude]}
+          zoom={13}
+          scrollWheelZoom={false}
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <Marker
+            position={[
+              location.coordinates.latitude,
+              location.coordinates.longitude,
+            ]}
+          />
+        </MapContainer>
+      )}
       <button onClick={() => addFavorite(employee)}>Add to Favorites</button>
     </div>
   );
