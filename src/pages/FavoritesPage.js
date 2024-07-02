@@ -20,7 +20,11 @@ const FavoritesPage = () => {
   }, [favorites]);
 
   if (favoriteEmployees.length === 0) {
-    return <p>No favorite employees found.</p>;
+    return (
+      <h1 style={{ textAlign: "center", color: "red" }}>
+        No favorite employees found.
+      </h1>
+    );
   }
 
   return (
