@@ -6,6 +6,7 @@ import FavoritesPage from "./pages/FavoritesPage";
 import EmployeeDetailsPage from "./pages/EmployeeDetailsPage";
 import SearchResults from "./components/SearchResults";
 import Page404 from "./pages/Page404";
+import NoFavoritesPage from "./pages/NoFavoritesPage"; // ייבוא העמוד החדש
 import { EmployeeProvider } from "./context/EmployeeContext";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path="favorites" element={<FavoritesPage />} />
             <Route path="employee" element={<EmployeeDetailsPage />} />
             <Route path="search/:searchTerm" element={<SearchResults />} />
+            <Route path="no-favorites" element={<NoFavoritesPage />} /> {/* הוספת הניתוב החדש */}
             <Route path="*" element={<Page404 />} />
           </Route>
         </Routes>
