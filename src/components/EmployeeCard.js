@@ -5,7 +5,8 @@ import { FaStar } from "react-icons/fa";
 import "../style/EmployeeCard.css";
 
 const EmployeeCard = ({ employee, delay, showDetails, index, company }) => {
-  const { favorites, addFavorite, removeFavorite } = useContext(EmployeeContext);
+  const { favorites, addFavorite, removeFavorite } =
+    useContext(EmployeeContext);
   const { name, email, location, picture, dob } = employee;
 
   const isFavorite = favorites.some((fav) => fav.email === email);

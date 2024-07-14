@@ -42,35 +42,6 @@ const EmployeeDetailsPage = () => {
     }
   }, [company, index, allEmployees, favorites, searchedEmployees]);
 
-  // const handleFavoriteClick = () => {
-  //   if (!employee) return;
-
-  //   if (isFavorite) {
-  //     removeFavorite(employee.email);
-  //   } else {
-  //     addFavorite(employee);
-  //   }
-  //   setIsFavorite(!isFavorite);
-  // };
-
-  // const handleFavoriteClick = () => {
-  //   if (!employee) return;
-
-  //   if (isFavorite) {
-  //     removeFavorite(employee.email);
-
-  //     if (favorites.length === 1) {
-  //       navigate("/no-favorites");
-  //     } else if (company === "favorites") {
-  //       const nextIndex = index === favorites.length - 1 ? 0 : index + 1;
-  //       navigate(`/employee/?company=favorites&index=${nextIndex}`);
-  //     }
-  //   } else {
-  //     addFavorite(employee);
-  //   }
-  //   setIsFavorite(!isFavorite);
-  // };
-
   const handleFavoriteClick = () => {
     if (!employee) return;
 
